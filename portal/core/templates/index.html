@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block another_style %}{{ block.super }}{% endblock %}
+{% block content %}
+
+    <h2><p align="center">Página para inscrição em eventos</p></h2>
+    <p align="center">1º Passo - caso faça parte do IFMT, responda o <a target="_blank" href="https://docs.google.com/forms/d/1yIX6YlGj6vpkOdVguyS3oXtE3yDWD8KRaUcL7RUBrPI/viewform">questionário</a></p>
+    <p align="center">2º Passo - <a href="/events/">inscrição</a> nos eventos disponíveis</p>
+
+{% endblock content %}

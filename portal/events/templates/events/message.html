@@ -1,0 +1,21 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block another_style %}{{ block.super }}{% endblock %}
+{% block content %}
+
+<div class="content">
+    <div class="message">
+    {% if message %}
+        {% for m in message %}
+            <p>{{ m }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if link_href %}
+            <p><a href="{{ link_href }}">{{ link_name }}</a></p>
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}

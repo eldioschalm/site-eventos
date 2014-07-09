@@ -1,0 +1,4 @@
+django == 1.5.4
+psycopg2
+gunicorn == 18.0
+supervisor == 3.0

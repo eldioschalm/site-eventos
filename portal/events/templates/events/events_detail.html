@@ -1,0 +1,58 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block another_style %}{{ block.super }}{% endblock %}
+{% block content %}
+
+<div class="content">
+    <h1>{{ event.name }}</h1>
+    <p>&nbsp;</p>
+    <form method="post">
+    {% csrf_token %}
+    {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endif %}
+        <div class="content_padding">
+         {% if programation %}
+         <h2>{% trans "Programmings available for subscription" %}</h2>
+         <table>
+              {% for program in programation %}
+              <tr class="{% cycle 'gray' 'white' %}">
+                {% if program.vacancies == 0 or program.get_inscribes == program.vacancies %}
+                <td class="disabled"><spam title="{{ program.description }}">{{ program.name }}</spam></td><td><input type="checkbox" name="{{ program.id }}" disabled></td>
+                {% else %}
+                <td><spam title="{{ program.description }}">{{ program.name }}</spam></td><td><input type="checkbox" name="programation" value="{{ program.id }}"></td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+          <tr>
+              <td colspan="2">&nbsp;</td>
+          </tr>
+          <tr>
+           <th colspan="2"><input type="submit" value="{% trans "Sign up" %}"/></th>
+          </tr>
+         </table>
+         {% else %}
+             <p>{% trans "No programming available" %}</p>
+         {% endif %}
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    {% if entries_made %}
+        <h2>{% trans "Registrations made successfully for this event" %}</h2>
+        <div class="content_padding">
+            <ul>
+            {% for entries in entries_made %}
+                <li>{{ entries.programation.name }} -> <a href="{% url 'entries_made_exclude' event.id entries.id%}">{% trans "Delete" %}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <h2>{% trans "You are not yet registered in any programming of this event" %}</h2>
+    {% endif %}
+</div>
+{% endblock content%}

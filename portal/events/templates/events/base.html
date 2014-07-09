@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load admin_static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+    {% block another_style %}{% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div id="float_menu">
+        <p><a href="{% url 'user_settings' %}">{{ user.username }}</a> |  <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a></p>
+    </div>
+    <div class="clearfloat"></div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

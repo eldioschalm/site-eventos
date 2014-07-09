@@ -1,0 +1,17 @@
+{% extends "accounts/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+<form method="post">
+{% csrf_token %}
+ <table>
+  {{ form }}
+  <tr>
+   <th>&nbsp;</th>
+   <td><input type="submit" value="{% trans "Create" %}"/></td>
+  </tr>
+ </table>
+</form>
+{% endblock content%}

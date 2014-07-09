@@ -1,0 +1,38 @@
+portal
+======
+
+sistema de eventos
+
+todo list:
+
+- criar validação para programações que ocorram no mesmo horário.
+- criar formulário para alteração dos dados do usuário;
+- relatório para gerar crachás;
+- relatório para gerar certificado;
+- ambiente para usuário ter acesso aos certificados dos eventos que participou;
+- sistema para submissão de projetos;
+
+material para leitura:
+
+- http://docs.djangoproject.com/en/dev/topics/auth/#topics-auth
+- http://docs.djangoproject.com/en/dev/topics/auth/#other-built-in-views
+- https://docs.djangoproject.com/en/dev/topics/auth/customizing/#extending-the-existing-user-model
+- http://stackoverflow.com/questions/3074938/django-m2m-form-save-through-table
+- http://peyman-django.blogspot.com.br/2010/03/full-easy-authentication-using.html
+- http://stackoverflow.com/questions/1451138/how-can-i-get-the-domain-name-of-my-site-within-a-django-template
+- http://drumcoder.co.uk/blog/2010/apr/09/django-reset-password/
+- https://docs.djangoproject.com/en/dev/topics/db/queries/
+- https://docs.djangoproject.com/en/1.6/ref/forms/validation/
+- https://docs.djangoproject.com/en/dev/topics/db/queries/
+# views e urls
+- http://www.djangobook.com/en/2.0/chapter08.html
+# user profile
+- https://docs.djangoproject.com/en/1.4/topics/auth/#auth-profiles
+# change backend autentication
+- https://docs.djangoproject.com/en/dev/topics/auth/
+# internationalization
+- http://henriquebastos.net/cuidados-importantes-ao-configurar-i18n-no-django/
+# div shadow
+- http://css-tricks.com/snippets/css/css-box-shadow/
+
+

@@ -1,0 +1,23 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block another_style %}{{ block.super }}{% endblock %}
+{% block content %}
+
+<div class="content">
+    {% if events %}
+        <h1>{% trans "Events available for subscription" %}</h1>
+        <div class="content_padding">
+            <ul>
+            {%  for event in events %}
+                <li><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <h1>{% trans "No events available" %}</h1>
+    {% endif %}
+</div>
+
+{% endblock content %}

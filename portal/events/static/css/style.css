@@ -1,0 +1,108 @@
+* {
+    margin:0;
+    padding:0;
+}
+
+body {
+}
+
+#float_menu {
+    position: fixed;
+    background-color: #cccccc;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: right;
+
+    -webkit-box-shadow: 0 8px 6px -6px black;
+       -moz-box-shadow: 0 8px 6px -6px black;
+            box-shadow: 0 8px 6px -6px black;
+}
+
+#float_menu p {
+    padding: 7px 7px 7px 7px;
+    margin-right: 20px auto;
+}
+
+.clearfloat {
+    clear:both;
+    height:0;
+    line-height: 0px;
+}
+
+.content {
+    float: left;
+    margin-top: 2.5em;
+    margin-left: 3%;
+    margin-right: 3%;
+    width:94%;
+}
+
+.content h1 {
+    text-align: center;
+    padding: 0.4em;
+    text-shadow: rgba(0,0,0,0.4) 0px 2px 2px;
+}
+
+.content h2 {
+    text-align: center;
+    padding: 0.4em;
+    text-shadow: rgba(0,0,0,0.4) 0px 2px 2px;
+}
+
+.content ul {
+    font-weight:inherit;
+    padding:1em 1em;
+    line-height: 1.8em;
+}
+
+.content_padding {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40em;
+    border: 2px dotted gray;
+}
+
+.content_padding table {
+    width: 100%;
+}
+
+.content_padding table td {
+    line-height: 2em;
+    padding-left: 1em;
+}
+
+.disabled {
+    color: #a1a1a1;
+    -moz-user-select: none;
+}
+
+.gray {
+        background-image: linear-gradient(to bottom, #F4F4F4, #C0C0C0 130%);
+}
+
+.white {
+    background-color: #ffffff;
+}
+
+.message {
+    text-align: center;
+    font-size: 1.30em;
+    padding:3em 10em;
+    background-color: #FCFBC4;
+    border: 2px dotted gray;
+    color: #800000;
+    margin-bottom: 1em;
+}
+
+.message a {
+    text-decoration: none;
+    line-height: 2em;
+    color: #000000;
+}
+
+.message a:hover {
+    text-decoration: underline overline;
+    color: #000000;
+}
