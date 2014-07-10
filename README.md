@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 portal
 ======
 
@@ -29,3 +30,7 @@ procedimentos para utilização no servidor (postgresql + gunicorn + supervisor)
 - editar o arquivo settings.py e adicionar "gunicorn" em INSTALLED_APPS
 - python manage.py run_gunicorn
 
+=======
+site-eventos
+============
+>>>>>>> 353149c1c731a1af73a968155080ad025c1d02e5
