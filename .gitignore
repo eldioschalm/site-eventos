@@ -1,0 +1,13 @@
+*.log
+*.pot
+*.pyc
+local_settings.conf
+db.sqlite3
+postgresql_procedimentos_iniciais.txt
+backup_banco_dados
+bin/
+include/
+lib/
+local/
+.idea/
+share/
