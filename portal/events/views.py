@@ -38,7 +38,7 @@ def events_detail(request, id):
                         string_translate = (_(u'Registration held successfully for '))
                         message.append(u'{0} {1}.'.format(string_translate, prog.name))
                     else:
-                        message.append(u'vagas insuficientes')
+                        message.append(u'vagas esgotadas')
                         # message.append(_(u'No programming available'))
                 except IntegrityError:
                     # if unique_toguether make a exception
