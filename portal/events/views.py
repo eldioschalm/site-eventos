@@ -29,15 +29,17 @@ def events_detail(request, id):
             user = UserExtended.objects.get(id=request.user.id)
             for c in request.POST.getlist('programation'):
                 try:
-                    p = Programation.objects.get(id=int(c))
-                    p_count = p.userextended.through.objects.exclude(modality='AP').count()
-                    if (p.vacancies > 0) and (p_count < p.vacancies):
+                    prog = Programation.objects.get(id=int(c))
+                    # p_count = p.userextended.through.objects.exclude(modality='AP').count()
+                    prog_count = ProgramationUserExtended.objects.filter(programation=prog.id, modality='PA').count()
+                    if (prog.vacancies > 0) and (prog_count < prog.vacancies):
                         obj = ProgramationUserExtended(programation_id=int(c), userextended=user, modality='PA')
                         obj.save()
                         string_translate = (_(u'Registration held successfully for '))
-                        message.append(u'{0} {1}.'.format(string_translate, p.name))
+                        message.append(u'{0} {1}.'.format(string_translate, prog.name))
                     else:
-                        message.append = (_(u'No programming available'))
+                        message.append(u'vagas insuficientes')
+                        # message.append(_(u'No programming available'))
                 except IntegrityError:
                     # if unique_toguether make a exception
                     string_translate = (_(u'Reregistration found for '))
