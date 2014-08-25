@@ -28,9 +28,11 @@ urlpatterns = patterns('',
     # for admin
     url(r'^admin/', include(admin.site.urls)),
     # for generate csv with entries made
-    url(r'^events/generate_csv/$', 'portal.events.views.generate_csv', name='generate_csv'),
-    url(r'^events/generate_participants/$', 'portal.events.views.generate_participants', name='generate_participants'),
+    url(r'^events/report/$', 'portal.events.views.report', name='report'),
+    # relatorio para usuários cadastrados sem inscricao
     url(r'^events/without/$', 'portal.events.views.without', name='without'),
+    # json para report
+    url(r'^json/(?P<event_id>\d+)/$', 'portal.events.views.json', name='json'),
     # login
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}, name='login'),
     # logout

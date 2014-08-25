@@ -1,0 +1,63 @@
+{% extends "events/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block another_style %}{{ block.super }}
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="content_padding">
+            <h2>Gerar Realatório por Programação</h2>
+            <form method="post" id="report" name="report" action="{% url 'report' %}">{% csrf_token %}
+                <p>
+                <label>Selecione um evento
+                    <select id="event" name="event">
+                        <option value="0">--------</option>
+                        {% for q in queryset %}
+                            <option value="{{ q.id }}">{{ q.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                </p>
+                <p>
+                <label>Selecione uma programação
+                    <select id="programation" name="programation">
+                        <option value="0">--------</option>
+                    </select>
+                </label>
+                </p>
+                <input type="submit" value="Criar">
+            </form>
+        </div>
+    </div>
+
+    <script>
+{#        alert( "You are running jQuery version: " + $.fn.jquery );#}
+        $(document).ready(function () {
+            $("#event").change(function () {
+{#                alert ("change event occured with value: " + document.getElementById("event").value);#}
+                $.ajax({
+                    url: '/json/' + $(this).val() + '/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (json) {
+                        var options = "<option value='0'>--------</option>";
+                        $.each(json, function (key, value) {
+                            options += '<option value="' + key + '">' + value + '</option>';
+                        });
+                        $("#programation").html(options);
+                    },
+                    error: function (xhr, errmsg, err) {
+                        alert(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+{% endblock content%}
+

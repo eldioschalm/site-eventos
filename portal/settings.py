@@ -159,6 +159,7 @@ INSTALLED_APPS = (
     'portal.core',
     'portal.myauth',
     'portal.events',
+    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging

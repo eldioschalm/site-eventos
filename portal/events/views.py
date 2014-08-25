@@ -12,6 +12,10 @@ from portal.events.models import ProgramationUserExtended
 from portal.myauth.models import UserExtended
 from django.db.utils import IntegrityError
 from django.utils.translation import ugettext_lazy as _
+# import json # json para usar no select com ajax
+from django.utils import simplejson
+from django.http import HttpResponse
+import csv # para gerar relatorio csv
 
 
 @login_required(login_url='/accounts/login/')
@@ -75,46 +79,83 @@ def entries_made_exclude(request, event, programationuserextended): # delete rec
         link_href = '/events/{0}/'.format(event)
         return render(request, 'events/message.html', locals())
 
+
+def json(request, event_id):
+    queryset = Programation.objects.filter(event=event_id).values_list('id', 'name')
+    dados = dict(queryset)
+    return HttpResponse(simplejson.dumps(dados), mimetype="application/json")
+
+
+def paralista(line):
+    lista = []
+    for l in line:
+        try:
+            lista.append(l.encode('utf8'))
+        except:
+            lista.append(l)
+    return lista
+
+
+@permission_required('events.change_programation')
+def report(request):
+    try:
+        queryset = ProgramationUserExtended.objects.select_related().filter(programation=request.POST['programation']).values_list('userextended__username', 'userextended__first_name', 'userextended__last_name', 'userextended__email', 'userextended__cpf', 'userextended__phone', 'participated')
+        # Create the HttpResponse object with the appropriate CSV header.
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="report.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Usuário', 'nome', 'sobrenome', 'email', 'cpf', 'telefone', 'participou'])
+        for q in queryset:
+            writer.writerow(paralista(q))
+
+        return response
+    except KeyError:
+        queryset = Event.objects.all().values('id', 'name')
+        return render(request, 'events/events_report.html', {'queryset': queryset})
+
+
+
 #print request.user.get_all_permissions()
-@permission_required('events.change_programation')
-def generate_csv(request):
-    import csv
-    from django.http import HttpResponse
-
-    event = Event.objects.get(id=1)
-    programation = event.programation_set.get(id=1)
-    users = ProgramationUserExtended.objects.filter(programation=programation)
-
-    # Create the HttpResponse object with the appropriate CSV header.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="inscritos.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Nome dos Inscritos'])
-    for u in users:
-        writer.writerow([u])
-
-    return response
-
-@permission_required('events.change_programation')
-def generate_participants(request):
-    import csv
-    from django.http import HttpResponse
-
-    event = Event.objects.get(id=1)
-    programation = event.programation_set.get(id=1)
-    users = ProgramationUserExtended.objects.filter(programation=programation, participated=True)
-
-    # Create the HttpResponse object with the appropriate CSV header.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="participants.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['Participantes'])
-    for u in users:
-        writer.writerow([u])
-
-    return response
+# @permission_required('events.change_programation')
+# def generate_csv(request):
+#     import csv
+#     from django.http import HttpResponse
+#
+#     event = Event.objects.get(id=1)
+#     programation = event.programation_set.get(id=1)
+#     users = ProgramationUserExtended.objects.filter(programation=programation)
+#
+#     # Create the HttpResponse object with the appropriate CSV header.
+#     response = HttpResponse(content_type='text/csv')
+#     response['Content-Disposition'] = 'attachment; filename="inscritos.csv"'
+#
+#     writer = csv.writer(response)
+#     writer.writerow(['Nome dos Inscritos'])
+#     for u in users:
+#         writer.writerow([u])
+#
+#     return response
+#
+# @permission_required('events.change_programation')
+# def generate_participants(request):
+#     import csv
+#     from django.http import HttpResponse
+#
+#     event = Event.objects.get(id=1)
+#     programation = event.programation_set.get(id=1)
+#     users = ProgramationUserExtended.objects.filter(programation=programation, participated=True)
+#
+#     # Create the HttpResponse object with the appropriate CSV header.
+#     response = HttpResponse(content_type='text/csv')
+#     response['Content-Disposition'] = 'attachment; filename="participants.csv"'
+#
+#     writer = csv.writer(response)
+#     writer.writerow(['Participantes'])
+#     for u in users:
+#         writer.writerow([u])
+#
+#     return response
 
 
 @permission_required('events.change_programation')
