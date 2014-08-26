@@ -27,11 +27,13 @@ urlpatterns = patterns('',
     url(r'^events/(?P<event>\d+)/(?P<programationuserextended>\d+)/$', 'portal.events.views.entries_made_exclude', name='entries_made_exclude'),
     # for admin
     url(r'^admin/', include(admin.site.urls)),
-    # for generate csv with entries made
-    url(r'^events/report/$', 'portal.events.views.report', name='report'),
     # relatorio para usuários cadastrados sem inscricao
     url(r'^events/without/$', 'portal.events.views.without', name='without'),
     # json para report
+    url(r'^events/report/$', 'portal.events.views.report', name='report'),
+    # relatorio completo
+    url(r'^events/reportfull/$', 'portal.events.views.reportfull', name='reportfull'),
+    # json para relatorio
     url(r'^json/(?P<event_id>\d+)/$', 'portal.events.views.json', name='json'),
     # login
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'accounts/login.html'}, name='login'),

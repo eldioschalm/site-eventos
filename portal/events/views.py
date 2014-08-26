@@ -47,7 +47,7 @@ def events_detail(request, id):
                 except IntegrityError:
                     # if unique_toguether make a exception
                     string_translate = (_(u'Reregistration found for '))
-                    message.append(u'{0} {1}.'.format(string_translate, p.name))
+                    message.append(u'{0} {1}.'.format(string_translate, prog.name))
             link_name = _(u'List programmings')
             link_href = request.get_full_path()
             return render(request, 'events/message.html', locals())
@@ -114,6 +114,20 @@ def report(request):
         queryset = Event.objects.all().values('id', 'name')
         return render(request, 'events/events_report.html', {'queryset': queryset})
 
+
+@permission_required('events.change_programation')
+def reportfull(request):
+    queryset = ProgramationUserExtended.objects.select_related().values_list('userextended__username', 'userextended__first_name', 'userextended__last_name', 'userextended__email', 'userextended__cpf', 'userextended__phone', 'participated', 'programation__name')
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="reportfull.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Usuário', 'nome', 'sobrenome', 'email', 'cpf', 'telefone', 'participou', 'programação'])
+    for q in queryset:
+        writer.writerow(paralista(q))
+
+    return response
 
 
 #print request.user.get_all_permissions()
